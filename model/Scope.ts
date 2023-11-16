@@ -8,9 +8,3 @@ export interface Scope {
         [locationId: string]: {};
     };
 }
-
-interface ScopeInputProps {
-    value?: Scope
-    onChange?: (newValue: Scope) => void;
-    tree?: Tree
-}
