@@ -30,7 +30,6 @@ const createNodeComponent = (groupId: string, scopeProps: ScopeInputProps) : any
         ));
 
     // Return component with children
-    console.log("createNodeComponent", groupId);
     return (
         <TreeNodeComponent
             key={groupId}
@@ -42,7 +41,6 @@ const createNodeComponent = (groupId: string, scopeProps: ScopeInputProps) : any
 }
 
 export const TreeViewerComponent = (props: ScopeInputProps) => {
-    console.log("Rerender")
     // Get the group roots (ie. got no parents)
     const rootGroups = getGroups(props.tree);
 
