@@ -4,7 +4,7 @@ import {ScopeInputProps, TreeViewerComponent} from "@/components/TreeViewerCompo
 import {dataRepository, searchScope} from "@/components/DataRepository";
 import Spinner from "@/components/Spinner";
 import {Scope} from "@/model/Scope";
-import {ids} from "@/app/utils";
+import {ids, mergeScopes} from "@/app/utils";
 
 export default function Home() {
     const [search, setSearch] = useState<string>('');
@@ -26,23 +26,7 @@ export default function Home() {
     const scope: ScopeInputProps = {
         value: selectedScope,
         onChange: (newValue) => {
-            const groups = selectedScope.groups;
-            ids(newValue.groups).forEach(id => { if( ids(groups).includes(id)) {
-                delete groups[id];
-            } else {
-                groups[id] = {};
-            }});
-            const locations = selectedScope.locations;
-            ids(newValue.locations).forEach(id => { if( ids(locations).includes(id)) {
-                delete locations[id];
-            } else {
-                locations[id] = {};
-            }});
-            //add the missing properties to the selected scope
-            const newScope = {
-                groups,
-                locations
-            }
+            const newScope = mergeScopes(selectedScope, newValue);
             setSelectedScope(newScope);
         },
         tree: treeData,

@@ -20,5 +20,5 @@ export const TreeNodeComponent = (props: TreeNodeProps) => {
         />
         <span>{name}</span>
         {children}
-    </div>)
+    </div>);
 }
