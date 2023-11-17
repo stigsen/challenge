@@ -102,7 +102,7 @@ export const searchScope = (tree: Tree, query: string): Scope | undefined => {
         }, {} as Scope["locations"]);
 
     //Find groups parent groups of found locations matching query or with name matching query
-    const groups =  ids(locations).reduce((acc, locationKey) => {
+    const parentGroups =  ids(locations).reduce((acc, locationKey) => {
         const parentId = ids(tree.locations[locationKey].parents)[0];
         const parents = getAllParents(tree, parentId);
         [ parentId, ...parents].forEach(parentId => {
@@ -113,14 +113,15 @@ export const searchScope = (tree: Tree, query: string): Scope | undefined => {
 
     //Find groups that is not in the parent group collection, but still matches query
     const groupsWithMatchingName = ids(tree.groups)
-        .filter(groupId => groups[groupId] !== undefined)
         .filter(groupId => tree.groups[groupId].name.toLowerCase().startsWith(query.toLowerCase()))
         .reduce((acc, groupId) => {
             acc[groupId] = {};
             return acc;
         }, {} as Scope["groups"]);
+    console.log("groupsWithMatchingName", query,parentGroups, groupsWithMatchingName, ids(tree.groups)
+        .filter(groupId => parentGroups[groupId] !== undefined));
     return  {
-        groups : {...groups, ...groupsWithMatchingName},
+        groups : {...parentGroups, ...groupsWithMatchingName},
         locations,
     }
 }

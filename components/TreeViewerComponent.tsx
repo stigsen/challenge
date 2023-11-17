@@ -30,6 +30,7 @@ const createNodeComponent = (groupId: string, scopeProps: ScopeInputProps) : any
         ));
 
     // Return component with children
+    console.log("createNodeComponent", groupId);
     return (
         <TreeNodeComponent
             key={groupId}
