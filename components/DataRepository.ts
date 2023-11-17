@@ -44,8 +44,20 @@ const tree: Tree = {
             name: "Denmark",
             parents: {}
         },
+        "jylland": {
+            name: "Jylland",
+            parents: {
+                "denmark": {}
+            }
+        },
         "aarhus": {
             name: "Aarhus",
+            parents: {
+                "jylland": {}
+            }
+        },
+        "sealand": {
+            name: "Sjælland",
             parents: {
                 "denmark": {}
             }
@@ -53,7 +65,7 @@ const tree: Tree = {
         "copenhagen": {
             name: "Copenhagen",
             parents: {
-                "denmark": {}
+                "sealand": {}
             }
         },
         "france": {
