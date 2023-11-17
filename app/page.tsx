@@ -1,13 +1,13 @@
 'use client';
-import React, {Suspense, useState} from "react";
+import React, {Suspense, useEffect, useState} from "react";
 import {ScopeInputProps, TreeViewerComponent} from "@/components/TreeViewerComponent";
 import {dataRepository, searchScope} from "@/components/DataRepository";
-import {Scope} from "@/model/Scope";
 import Spinner from "@/components/Spinner";
+import {Scope} from "@/model/Scope";
 
 export default function Home() {
     const [search, setSearch] = useState<string>('');
-    const [scope, setScope] = useState<Scope>({
+    const [selectedScope, setSelectedScope] = useState<Scope>({
         groups: {
             paris: {}
         },
@@ -15,17 +15,24 @@ export default function Home() {
             "aarhus-office-hub": {}
         },
     });
+    const [selectedSearch, setSelectedSearch] = useState<Scope | undefined>(undefined);
 
-    const scopeInput: ScopeInputProps = {
-        value: scope,
+    const treeData = dataRepository.getTreeData();
+
+    useEffect(() => {
+        setSelectedSearch(searchScope(treeData, search));
+    }, [search]);
+
+    const scope: ScopeInputProps = {
+        value: selectedScope,
         onChange: (newValue) => {
             console.log(newValue)
         },
-        tree: dataRepository.getTreeData(),
-        search: searchScope(dataRepository.getTreeData(), search)
+        tree: treeData,
+        search: selectedSearch
     }
 
-    console.log("search", search, scopeInput.search);
+    console.log("search", search, scope.search);
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -33,7 +40,7 @@ export default function Home() {
                 <Suspense fallback={<Spinner/>}>
                     <h2 className='place-content-around'>Select Locations</h2>
                     <input type='text' value={search} onChange={(e)=> setSearch(e.target.value)}/>
-                    <TreeViewerComponent  {...scopeInput } />
+                    <TreeViewerComponent { ...scope }  />
                 </Suspense>
             </div>
         </main>

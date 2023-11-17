@@ -1,6 +1,6 @@
 import {Tree} from "@/model/Tree";
 import {Scope} from "@/model/Scope";
-import {getAllParents, getGroups} from "@/app/utils";
+import {getAllParents, ids} from "@/app/utils";
 
 const tree: Tree = {
     locations: {
@@ -90,10 +90,11 @@ export const dataRepository = {
     },
 };
 
-export const searchScope = (tree: Tree, query: string): Scope => {
-    if(!query) return {groups: {}, locations: {}};
+export const searchScope = (tree: Tree, query: string): Scope | undefined => {
+    if(query.length === 0) return undefined;
+
     //Find locations with name matching query
-    const locations = Object.keys(tree.locations)
+    const locations = ids(tree.locations)
         .filter(locationId => tree.locations[locationId].name.toLowerCase().startsWith(query.toLowerCase()))
         .reduce((acc, locationId) => {
             acc[locationId] = {};
@@ -101,8 +102,8 @@ export const searchScope = (tree: Tree, query: string): Scope => {
         }, {} as Scope["locations"]);
 
     //Find groups parent groups of found locations matching query or with name matching query
-    const groups =  Object.keys(locations).reduce((acc, locationKey) => {
-        const parentId = Object.keys(tree.locations[locationKey].parents)[0];
+    const groups =  ids(locations).reduce((acc, locationKey) => {
+        const parentId = ids(tree.locations[locationKey].parents)[0];
         const parents = getAllParents(tree, parentId);
         [ parentId, ...parents].forEach(parentId => {
             acc[parentId] = {};
@@ -111,14 +112,14 @@ export const searchScope = (tree: Tree, query: string): Scope => {
     },{ } as Scope["groups"])
 
     //Find groups that is not in the parent group collection, but still matches query
-    const groupsWithMatchingName = Object.keys(tree.groups)
+    const groupsWithMatchingName = ids(tree.groups)
         .filter(groupId => groups[groupId] !== undefined)
         .filter(groupId => tree.groups[groupId].name.toLowerCase().startsWith(query.toLowerCase()))
         .reduce((acc, groupId) => {
             acc[groupId] = {};
             return acc;
         }, {} as Scope["groups"]);
-    return {
+    return  {
         groups : {...groups, ...groupsWithMatchingName},
         locations,
     }

@@ -8,7 +8,7 @@ export interface ScopeInputProps {
     value?: Scope
     onChange?: (newValue: Scope) => void;
     tree?: Tree,
-    search?:Scope
+    search?: Scope
 }
 
 /* Helper factory to create the hierarchy of groups and location components */
@@ -25,24 +25,23 @@ const createNodeComponent = (groupId: string, scopeProps: ScopeInputProps) : any
             key={location.id}
             name={tree.locations[location.id].name}
             checked={!!value.locations[location.id] || !!value.groups[groupId] }
-            visible={ !!search?.locations[location.id]}
+            visible={ !search || !!search?.locations[location.id]}
         />
         ));
 
     // Return component with children
-    console.log("createNodeComponent", groupId);
     return (
         <TreeNodeComponent
             key={groupId}
             name={tree.groups[groupId].name}
             checked={!!value.groups[groupId]}
-            visible={ !!search?.groups[groupId] } >
+            visible={ !search || !!search?.groups[groupId] } >
             {childGroups.concat(locationComponents)}
         </TreeNodeComponent>);
 }
 
-export const TreeViewerComponent = (props: ScopeInputProps, search?: string) => {
-
+export const TreeViewerComponent = (props: ScopeInputProps) => {
+    console.log("Rerender")
     // Get the group roots (ie. got no parents)
     const rootGroups = getGroups(props.tree);
 
