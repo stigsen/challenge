@@ -2,7 +2,7 @@ import {TreeNodeComponent} from "@/components/TreeNodeComponent";
 import React from "react";
 import {Scope} from "@/model/Scope";
 import {Tree} from "@/model/Tree";
-import {getGroups, getLocations} from "@/app/utils";
+import {getAllGroupParents, getGroups, getLocations, ids} from "@/app/utils";
 
 export interface ScopeInputProps {
     value?: Scope
@@ -20,25 +20,30 @@ const createNodeComponent = (groupId: string, scopeProps: ScopeInputProps) : any
     const childrenKeys = getGroups(tree, groupId);
     const childGroups = childrenKeys.map(child => createNodeComponent(child.id, scopeProps))
     const locations = getLocations(tree, groupId);
-    const locationComponents = locations.map(location => (
-        <TreeNodeComponent
+    const locationComponents = locations.map(location => {
+        const locationParentGroup = ids(tree.locations[location.id].parents)[0];
+        const allParents = getAllGroupParents(tree, locationParentGroup);
+        const parentSelected = [ locationParentGroup, ...allParents].some(id => !!value.groups[id]);
+        return (<TreeNodeComponent
             onChange={(id) => { onChange ? onChange({ locations: { [id] : {} }, groups:{}  }) : undefined } }
             key={location.id}
             id={location.id}
             name={tree.locations[location.id].name}
-            checked={!!value.locations[location.id] || !!value.groups[groupId] }
+            checked={!!value.locations[location.id] || parentSelected }
             visible={ !search || !!search?.locations[location.id]}
         />
-        ));
+        )});
 
-    // Return component with children
+    // Return group component with children
+    const groupParentId = getAllGroupParents(tree, groupId)
+    const parentSelected = groupParentId.some(id => !!value.groups[id]);
     return (
         <TreeNodeComponent
             key={groupId}
             onChange={(id) => { onChange ? onChange({ groups: { [id] : {} }, locations:{}  }) : undefined } }
             id={groupId}
             name={tree.groups[groupId].name}
-            checked={!!value.groups[groupId]}
+            checked={!!value.groups[groupId] || parentSelected }
             visible={ !search || !!search?.groups[groupId] } >
                 {childGroups.concat(locationComponents)}
         </TreeNodeComponent>);

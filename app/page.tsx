@@ -4,7 +4,7 @@ import {ScopeInputProps, TreeViewerComponent} from "@/components/TreeViewerCompo
 import {dataRepository, searchScope} from "@/components/DataRepository";
 import Spinner from "@/components/Spinner";
 import {Scope} from "@/model/Scope";
-import {ids, mergeScopes} from "@/app/utils";
+import {mergeScopes} from "@/app/utils";
 
 export default function Home() {
     const [search, setSearch] = useState<string>('');

@@ -5,11 +5,11 @@ export const ids = (obj:any) : string[] => {
     return Object.keys(obj);
 }
 
-export const getAllParents = (tree: Tree, parentId? : string ) : string[]   => {
-    if(!tree || !parentId) return [];
-    const group = tree.groups[parentId]
-    const parents = group ? ids(tree.groups[parentId]?.parents) : [];
-    const grandParents = parents?.flatMap(parentId => getAllParents(tree, parentId));
+export const getAllGroupParents = (tree: Tree, groupId? : string ) : string[]   => {
+    if(!tree || !groupId) return [];
+    const group = tree.groups[groupId]
+    const parents = group ? ids(tree.groups[groupId]?.parents) : [];
+    const grandParents = parents?.flatMap(groupId => getAllGroupParents(tree, groupId));
     return [...parents, ...grandParents];
 }
 

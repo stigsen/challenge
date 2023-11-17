@@ -1,6 +1,6 @@
 import {Tree} from "@/model/Tree";
 import {Scope} from "@/model/Scope";
-import {getAllParents, ids} from "@/app/utils";
+import {getAllGroupParents, ids} from "@/app/utils";
 
 const tree: Tree = {
     locations: {
@@ -95,7 +95,7 @@ export const searchScope = (tree: Tree, query: string): Scope | undefined => {
 
     //Find locations with name matching query
     const locations = ids(tree.locations)
-        .filter(locationId => tree.locations[locationId].name.toLowerCase().startsWith(query.toLowerCase()))
+        .filter(locationId => tree.locations[locationId].name.toLowerCase().includes(query.toLowerCase()))
         .reduce((acc, locationId) => {
             acc[locationId] = {};
             return acc;
@@ -104,7 +104,7 @@ export const searchScope = (tree: Tree, query: string): Scope | undefined => {
     //Find groups parent groups of found locations matching query or with name matching query
     const parentGroups = ids(locations).reduce((acc, locationKey) => {
         const parentId = ids(tree.locations[locationKey].parents)[0];
-        const parents = getAllParents(tree, parentId);
+        const parents = getAllGroupParents(tree, parentId);
         [parentId, ...parents].forEach(parentId => {
             acc[parentId] = {};
         });
@@ -113,9 +113,9 @@ export const searchScope = (tree: Tree, query: string): Scope | undefined => {
 
     //Find groups that is not in the parent group collection, but still matches query
     const groupsWithMatchingName = ids(tree.groups)
-        .filter(groupId => tree.groups[groupId].name.toLowerCase().startsWith(query.toLowerCase()))
+        .filter(groupId => tree.groups[groupId].name.toLowerCase().includes(query.toLowerCase()))
         .reduce((acc, groupId) => {
-            const parents = getAllParents(tree, groupId);
+            const parents = getAllGroupParents(tree, groupId);
             parents.forEach(parentId => {
                 acc[parentId] = {};
             });
