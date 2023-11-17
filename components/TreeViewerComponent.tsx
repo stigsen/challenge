@@ -13,7 +13,7 @@ export interface ScopeInputProps {
 
 /* Helper factory to create the hierarchy of groups and location components */
 const createNodeComponent = (groupId: string, scopeProps: ScopeInputProps) : any => {
-    const { tree, value, search } = scopeProps;
+    const { tree, value, search, onChange } = scopeProps;
     if(!tree || !value) {
         return null;
     }
@@ -22,7 +22,9 @@ const createNodeComponent = (groupId: string, scopeProps: ScopeInputProps) : any
     const locations = getLocations(tree, groupId);
     const locationComponents = locations.map(location => (
         <TreeNodeComponent
+            onChange={(id) => { onChange ? onChange({ locations: { [id] : {} }, groups:{}  }) : undefined } }
             key={location.id}
+            id={location.id}
             name={tree.locations[location.id].name}
             checked={!!value.locations[location.id] || !!value.groups[groupId] }
             visible={ !search || !!search?.locations[location.id]}
@@ -33,10 +35,12 @@ const createNodeComponent = (groupId: string, scopeProps: ScopeInputProps) : any
     return (
         <TreeNodeComponent
             key={groupId}
+            onChange={(id) => { onChange ? onChange({ groups: { [id] : {} }, locations:{}  }) : undefined } }
+            id={groupId}
             name={tree.groups[groupId].name}
             checked={!!value.groups[groupId]}
             visible={ !search || !!search?.groups[groupId] } >
-            {childGroups.concat(locationComponents)}
+                {childGroups.concat(locationComponents)}
         </TreeNodeComponent>);
 }
 

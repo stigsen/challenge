@@ -4,6 +4,7 @@ import {ScopeInputProps, TreeViewerComponent} from "@/components/TreeViewerCompo
 import {dataRepository, searchScope} from "@/components/DataRepository";
 import Spinner from "@/components/Spinner";
 import {Scope} from "@/model/Scope";
+import {ids} from "@/app/utils";
 
 export default function Home() {
     const [search, setSearch] = useState<string>('');
@@ -16,7 +17,6 @@ export default function Home() {
         },
     });
     const [selectedSearch, setSelectedSearch] = useState<Scope | undefined>(undefined);
-
     const treeData = dataRepository.getTreeData();
 
     useEffect(() => {
@@ -26,13 +26,28 @@ export default function Home() {
     const scope: ScopeInputProps = {
         value: selectedScope,
         onChange: (newValue) => {
-            console.log(newValue)
+            const groups = selectedScope.groups;
+            ids(newValue.groups).forEach(id => { if( ids(groups).includes(id)) {
+                delete groups[id];
+            } else {
+                groups[id] = {};
+            }});
+            const locations = selectedScope.locations;
+            ids(newValue.locations).forEach(id => { if( ids(locations).includes(id)) {
+                delete locations[id];
+            } else {
+                locations[id] = {};
+            }});
+            //add the missing properties to the selected scope
+            const newScope = {
+                groups,
+                locations
+            }
+            setSelectedScope(newScope);
         },
         tree: treeData,
         search: selectedSearch
     }
-
-    console.log("search", search, scope.search);
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
