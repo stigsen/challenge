@@ -23,14 +23,16 @@ export default function Home() {
         setSelectedSearch(searchScope(treeData, search));
     }, [search]);
 
+    const selectedScopeChanged = (scope: Scope) => {
+        const newScope = mergeScopes(selectedScope, scope);
+        setSelectedScope(newScope);
+    }
+
     const scope: ScopeInputProps = {
         value: selectedScope,
-        onChange: (newValue) => {
-            const newScope = mergeScopes(selectedScope, newValue);
-            setSelectedScope(newScope);
-        },
-        tree: treeData,
-        search: selectedSearch
+        onChange: selectedScopeChanged,
+        tree:  treeData,
+        search : selectedSearch
     }
 
     return (
@@ -38,8 +40,8 @@ export default function Home() {
             <div id="challenge">
                 <Suspense fallback={<Spinner/>}>
                     <h2 className='place-content-around'>Select Locations</h2>
-                    <input type='text' value={search} onChange={(e)=> setSearch(e.target.value)}/>
-                    <TreeViewerComponent { ...scope }  />
+                    <input type='text' value={search} onChange={(e) => setSearch(e.target.value)}/>
+                    <TreeViewerComponent {...scope}  />
                 </Suspense>
             </div>
         </main>
