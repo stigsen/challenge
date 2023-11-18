@@ -16,7 +16,7 @@ export const TreeNodeComponent = (props: TreeNodeProps) => {
             type='checkbox'
             className='accent-emerald-800'
             checked={checked}
-            onClick={() => onChange(id)}
+            onChange={() => onChange(id)}
         />
         <span>{name}</span>
         {children}

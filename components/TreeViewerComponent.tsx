@@ -2,7 +2,8 @@ import {TreeNodeComponent} from "@/components/TreeNodeComponent";
 import React from "react";
 import {Scope} from "@/model/Scope";
 import {Tree} from "@/model/Tree";
-import {getAllGroupParents, getGroups, getLocations, ids} from "@/app/utils";
+import {ids} from "@/utils/misc";
+import {getAllGroupParents, getGroups, getLocations} from "@/utils/TreeHelper";
 
 export interface ScopeInputProps {
     value?: Scope
@@ -63,6 +64,5 @@ export const TreeViewerComponent = (props: ScopeInputProps) => {
     const rootGroups = getGroups(props.tree);
 
     const treeNodes = rootGroups.map(root => createNodeComponent( root.id, props));
-
     return (<div>{treeNodes}</div>);
 }

@@ -1,9 +1,5 @@
-import {Tree, TreeNode} from "@/model/Tree";
-import {Scope} from "@/model/Scope";
-
-export const ids = (obj:any) : string[] => {
-    return Object.keys(obj);
-}
+import {ids} from "@/utils/misc";
+import {Tree} from "@/model/Tree";
 
 export const getAllGroupParents = (tree: Tree, groupId? : string ) : string[]   => {
     if(!tree || !groupId) return [];
@@ -26,24 +22,4 @@ export const getLocations = (tree: Tree, parentId?: string) => {
     return ids(tree.locations)
         .filter(groupId => parentId ? tree.locations[groupId].parents[parentId] : ids(tree.locations[groupId].parents).length === 0)
         .map(groupId => ({id: groupId, name: tree.locations[groupId].name}))
-}
-
-// Will merge the 2 objects - by adding missing properties and removing properties that are all-ready in the current scope
-export const mergeScopes = ( scope1 : Scope, scope2 : Scope ) : Scope => {
-    const groups = scope1.groups;
-    ids(scope2.groups).forEach(id => { if( ids(groups).includes(id)) {
-        delete groups[id];
-    } else {
-        groups[id] = {};
-    }});
-    const locations = scope1.locations;
-    ids(scope2.locations).forEach(id => { if( ids(locations).includes(id)) {
-        delete locations[id];
-    } else {
-        locations[id] = {};
-    }});
-    return  {
-        groups,
-        locations
-    }
 }

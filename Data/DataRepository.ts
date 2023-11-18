@@ -1,6 +1,6 @@
 import {Tree} from "@/model/Tree";
 import {Scope} from "@/model/Scope";
-import {getAllGroupParents, ids} from "@/app/utils";
+import {getAllGroupParents, ids} from "@/utils/misc";
 
 const tree: Tree = {
     locations: {

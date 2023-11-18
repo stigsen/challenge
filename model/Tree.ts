@@ -1,3 +1,5 @@
+import {ids} from "@/utils/misc";
+
 export interface TreeNode {
     name: string;
     parents: {
@@ -14,3 +16,4 @@ export interface Tree {
     };
     partnerId: string;
 }
+
