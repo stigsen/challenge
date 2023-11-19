@@ -53,7 +53,7 @@ export const searchScope = (tree: Tree, query: string): Scope | undefined => {
         return acc;
     }, {} as Scope["groups"])
 
-    //Find groups that is not in the parent group collection, but still matches query
+    //Find groups that is _not_ in the parent group collection, but still matches query
     const groupsWithMatchingName = ids(tree.groups)
         .filter(groupId => tree.groups[groupId].name.toLowerCase().includes(query.toLowerCase()))
         .reduce((acc, groupId) => {

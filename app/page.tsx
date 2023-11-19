@@ -1,6 +1,6 @@
 'use client';
 import React, {useEffect, useState} from "react";
-import {ScopeInputProps, TreeViewerComponent} from "@/components/TreeViewerComponent";
+import {ScopeInputProps, TreeViewComponent} from "@/components/TreeViewComponent";
 import {dataRepository} from "@/Data/DataRepository";
 import LoadingComponent from "@/components/LoadingComponent";
 import {Scope} from "@/model/Scope";
@@ -60,7 +60,7 @@ export default function Home() {
                             search={search}
                             setSearch={setSearch}
                             clearSearch={clearSearch}/>
-                            {partner ? <TreeViewerComponent {...scope}  /> : <LoadingComponent/>}
+                            {partner ? <TreeViewComponent {...scope}  /> : <LoadingComponent/>}
                     </div>
                 </Card>
             </main>

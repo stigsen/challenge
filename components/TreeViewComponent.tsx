@@ -76,7 +76,7 @@ const createNodeComponent = (groupId: string, scopeProps: ScopeInputProps): any 
     }
 }
 
-export const TreeViewerComponent = (props: ScopeInputProps) => {
+export const TreeViewComponent = (props: ScopeInputProps) => {
     // Get the group roots (i.e. got no parents)
     const rootGroups = getGroups(props.tree);
 
