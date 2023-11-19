@@ -6,7 +6,12 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  important: true,
   theme: {
+    container: {
+      center: true,
+      padding: "1.5rem",
+    },
     fontFamily: {
       'sans': ['Helvetica', 'Arial', 'sans-serif'],
     },

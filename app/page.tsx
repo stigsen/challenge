@@ -1,5 +1,5 @@
 'use client';
-import React, {Suspense, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import {ScopeInputProps, TreeViewerComponent} from "@/components/TreeViewerComponent";
 import {dataRepository} from "@/Data/DataRepository";
 import Spinner from "@/components/Spinner";
@@ -7,9 +7,10 @@ import {Scope} from "@/model/Scope";
 import {mergeScopes, searchScope} from "@/utils/ScopeHelper";
 import {Card} from "@/components/Card";
 import {SearchField} from "@/components/SearchField";
+import {PartnerSelector} from "@/components/PartnerSelector";
 
 export default function Home() {
-
+    const [partner, setPartner] = useState<string>();
     const [search, setSearch] = useState<string>('');
     const [selectedScope, setSelectedScope] = useState<Scope>({
         groups: {
@@ -20,15 +21,23 @@ export default function Home() {
         },
     });
     const [selectedSearch, setSelectedSearch] = useState<Scope | undefined>(undefined);
-    const treeData = dataRepository.getTreeData();
+    const treeData = dataRepository.getTreeData(partner || '');
 
     useEffect(() => {
-        setSelectedSearch(searchScope(treeData, search));
+        if(treeData) {
+            setSelectedSearch(searchScope(treeData, search));
+        }
     }, [search]);
 
     const selectedScopeChanged = (scope: Scope) => {
         const newScope = mergeScopes(selectedScope, scope);
         setSelectedScope(newScope);
+    }
+
+    const changePartner = (partner: string) => {
+        setPartner(partner);
+        setSearch('');
+        setSelectedSearch(undefined);
     }
 
     const clearSearch = () => {
@@ -43,19 +52,21 @@ export default function Home() {
         search: selectedSearch
     }
     return (
-        <main className="flex min-h-screen flex-col items-center p-8">
+        <>
+        <PartnerSelector onSelect={changePartner}/>
+        <main className="flex min-h-screen flex-col items-center p-5">
             <Card>
-                <div className="px-6 py-4 items-center">
-                    <h1 className='text-center font-bold'>Select Locations</h1>
-                    <SearchField
-                        search={search}
-                        setSearch={setSearch}
-                        clearSearch={clearSearch}/>
-                    <Suspense fallback={<Spinner/>}>
-                        <TreeViewerComponent {...scope}  />
-                    </Suspense>
-                </div>
+                    <div className="px-6 py-4 items-center">
+                        <h1 className='text-center font-bold'>Select Locations</h1>
+                        <SearchField
+                            search={search}
+                            setSearch={setSearch}
+                            clearSearch={clearSearch}/>
+
+                        { partner ? <TreeViewerComponent {...scope}  /> : <Spinner/>}
+                    </div>
             </Card>
         </main>
+        </>
     )
 }

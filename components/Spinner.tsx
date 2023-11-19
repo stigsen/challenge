@@ -1,7 +1,7 @@
 export default function Spinner() {
     return (
-        <span className="h-screen w-full flex justify-center items-center">
-          <span className="animate-ping relative flex h-10 w-10  rounded-full bg-purple-400 opacity-75"></span>
+        <span className="h-500 w-full flex justify-center items-center">
+          <span className="animate-ping flex h-5 w-5  rounded-full bg-green-700 opacity-75"></span>
         </span>
     );
 }
