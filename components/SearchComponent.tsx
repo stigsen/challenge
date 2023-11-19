@@ -9,8 +9,9 @@ type Props = {
     clearSearch: () => void;
 }
 export const SearchComponent = (props: Props) => {
-    const [inputRef] = useState<React.RefObject<HTMLInputElement>>(React.createRef());
     const {search, setSearch, clearSearch} = props;
+    const [inputRef] = useState<React.RefObject<HTMLInputElement>>(React.createRef());
+
     return (
         <div className="w-full flex justify-end items-center relative">
             <input

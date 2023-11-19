@@ -77,14 +77,16 @@ const createNodeComponent = (groupId: string, scopeProps: ScopeInputProps): any 
 }
 
 export const TreeViewComponent = (props: ScopeInputProps) => {
+    const { tree , search } = props;
+
     // Get the group roots (i.e. got no parents)
-    const rootGroups = getGroups(props.tree);
+    const rootGroups = getGroups(tree);
 
     const treeNodes = rootGroups.map(root => createNodeComponent(root.id, props));
 
-    const noLocationsFound = props.search &&
-        ids(props.search?.locations).length === 0 &&
-        ids(props.search?.groups).length === 0;
+    const noLocationsFound = search &&
+        ids(search?.locations).length === 0 &&
+        ids(search?.groups).length === 0;
 
     return (
         <div>

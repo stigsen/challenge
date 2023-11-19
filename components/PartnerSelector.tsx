@@ -3,7 +3,6 @@ import {dataRepository} from "@/Data/DataRepository";
 
 type Props = {
     onSelect: (partner: string) => void;
-
 }
 export const PartnerSelector = (props: Props) => {
     const {onSelect} = props;
