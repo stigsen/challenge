@@ -1,4 +1,3 @@
-// Will merge the 2 objects - by adding missing properties and removing properties that are all-ready in the current scope
 import {Scope} from "@/model/Scope";
 import {ids} from "@/utils/misc";
 import {Tree} from "@/model/Tree";
@@ -12,6 +11,7 @@ export const initialScope = ( defaultScope?: Partial<Scope>): Scope => ({
     ...defaultScope
 });
 
+// Will merge the 2 objects - by adding missing properties and removing properties that are all-ready in the current scope
 export const mergeScopes = (scope1 : Scope, scope2 : Scope ) : Scope => {
     const groups = scope1.groups;
     ids(scope2.groups).forEach(id => { if( ids(groups).includes(id)) {
