@@ -15,7 +15,7 @@ export const SearchComponent = (props: Props) => {
         <div className="w-full flex justify-end items-center relative">
             <input
                 ref={inputRef}
-                className=' text-xs focus:caret-gray-500 px-2 py-1 my-4 w-full rounded-md border-2 outline-0'
+                className=' text-xs focus:caret-gray-500 px-2 py-1 mt-4 w-full rounded-md border-2 outline-0'
                 type='text'
                 value={search}
                 placeholder='Search locations or groups'
@@ -23,7 +23,7 @@ export const SearchComponent = (props: Props) => {
             {search.length > 0 ?
                 <Image
                     src={deleteIcon}
-                    className="cursor-pointer absolute mr-2 w-4"
+                    className="cursor-pointer absolute mr-2 mt-4 w-4"
                     alt="Clear Search Icon"
                     onClick={() => {
                         clearSearch();
@@ -31,7 +31,7 @@ export const SearchComponent = (props: Props) => {
                     }}/>
                 : <Image
                     src={searchIcon}
-                    className="absolute mr-3 w-4 hidden min-[330px]:block"
+                    className="absolute mr-3 mt-4 w-4 hidden min-[330px]:block"
                     alt="Search Icon"/>}
         </div>
     );

@@ -5,6 +5,7 @@ import {Tree} from "@/model/Tree";
 import {ids} from "@/utils/misc";
 import {getAllGroupParents, getGroups, getLocations} from "@/utils/TreeHelper";
 import {initialScope} from "@/utils/ScopeHelper";
+import {LocationCounter} from "@/components/LocationCounter";
 
 export interface ScopeInputProps {
     value?: Scope
@@ -23,12 +24,13 @@ function locationOrParentsSelected(tree: Tree, locationId: string, selectedScope
 function groupOrParentsSelected(tree: Tree, groupId: string, selectedScope: Scope) {
     const selected = !!selectedScope.groups[groupId];
     const groupParentId = getAllGroupParents(tree, groupId)
-    return  selected || groupParentId.some(id => !!selectedScope.groups[id]);
+    return selected || groupParentId.some(id => !!selectedScope.groups[id]);
 }
 
 function locationVisible(locationId: string, search: Scope | undefined) {
     return !search || !!search?.locations[locationId]
 }
+
 function groupVisible(groupId: string, search: Scope | undefined) {
     return !search || !!search?.groups[groupId];
 }
@@ -48,7 +50,7 @@ const createNodeComponent = (groupId: string, scopeProps: ScopeInputProps): any 
         const locations = getLocations(tree, groupId);
         const locationComponents = locations.map(location => {
             return (<TreeNodeComponent
-                    onChange={(id) => onChange( initialScope({locations: {[id]: {}}}) ) }
+                    onChange={(id) => onChange(initialScope({locations: {[id]: {}}}))}
                     key={location.id}
                     id={location.id}
                     name={tree.locations[location.id].name}
@@ -61,7 +63,7 @@ const createNodeComponent = (groupId: string, scopeProps: ScopeInputProps): any 
         return (
             <TreeNodeComponent
                 key={groupId}
-                onChange={(id) => onChange( initialScope({groups: {[id]: {}}})) }
+                onChange={(id) => onChange(initialScope({groups: {[id]: {}}}))}
                 id={groupId}
                 name={tree.groups[groupId].name}
                 checked={groupOrParentsSelected(tree, groupId, value)}
@@ -79,7 +81,14 @@ export const TreeViewComponent = (props: ScopeInputProps) => {
     const rootGroups = getGroups(props.tree);
 
     const treeNodes = rootGroups.map(root => createNodeComponent(root.id, props));
-    return (<div className='min-h-[300px] max-h-[400px] overflow-auto '>
-        {treeNodes}
-    </div>);
+
+    console.log("fff", props.search)
+    return (
+        <div>
+            <LocationCounter {...props}/>
+            <div className='min-h-[300px] max-h-[400px] overflow-auto '>
+                {treeNodes}
+            </div>
+        </div>
+    );
 }
