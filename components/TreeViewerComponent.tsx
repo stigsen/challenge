@@ -64,5 +64,7 @@ export const TreeViewerComponent = (props: ScopeInputProps) => {
     const rootGroups = getGroups(props.tree);
 
     const treeNodes = rootGroups.map(root => createNodeComponent( root.id, props));
-    return (<div>{treeNodes}</div>);
+    return (<div className='min-h-[300px] max-h-[400px] overflow-auto '>
+        {treeNodes}
+    </div>);
 }

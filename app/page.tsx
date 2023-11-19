@@ -1,8 +1,8 @@
 'use client';
-import React, { useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ScopeInputProps, TreeViewerComponent} from "@/components/TreeViewerComponent";
 import {dataRepository} from "@/Data/DataRepository";
-import Spinner from "@/components/Spinner";
+import LoadingComponent from "@/components/LoadingComponent";
 import {Scope} from "@/model/Scope";
 import {mergeScopes, searchScope} from "@/utils/ScopeHelper";
 import {Card} from "@/components/Card";
@@ -24,7 +24,7 @@ export default function Home() {
     const treeData = dataRepository.getTreeData(partner || '');
 
     useEffect(() => {
-        if(treeData) {
+        if (treeData) {
             setSelectedSearch(searchScope(treeData, search));
         }
     }, [search]);
@@ -53,20 +53,19 @@ export default function Home() {
     }
     return (
         <>
-        <PartnerSelector onSelect={changePartner}/>
-        <main className="flex min-h-screen flex-col items-center p-5">
-            <Card>
+            <PartnerSelector onSelect={changePartner}/>
+            <main className="flex min-h-screen flex-col items-center p-5">
+                <Card>
                     <div className="px-6 py-4 items-center">
                         <h1 className='text-center font-bold'>Select Locations</h1>
                         <SearchField
                             search={search}
                             setSearch={setSearch}
                             clearSearch={clearSearch}/>
-
-                        { partner ? <TreeViewerComponent {...scope}  /> : <Spinner/>}
+                            {partner ? <TreeViewerComponent {...scope}  /> : <LoadingComponent/>}
                     </div>
-            </Card>
-        </main>
+                </Card>
+            </main>
         </>
     )
 }

@@ -5,7 +5,7 @@ type Props = {
 }
 export const Card = (props: Props) => {
     return (
-        <div className="min-h-200 w-700 bg-white rounded shadow-lg">
+        <div className="min-h-200 w-5/6 bg-white rounded shadow-lg">
             {props.children}
         </div>
     )

@@ -11,7 +11,7 @@ export const PartnerSelector = (props: Props) => {
 
     const partnerOptions = partners ?
         partners.map((partner, index) => <option key={index} value={partner}>{partner}</option> )
-     : [<option>Loading...</option>];
+     : [<option key='option1'>Loading...</option>];
 
     useEffect(() => {
         const partners = dataRepository.getPartners();
