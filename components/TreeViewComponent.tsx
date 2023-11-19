@@ -82,7 +82,6 @@ export const TreeViewComponent = (props: ScopeInputProps) => {
 
     const treeNodes = rootGroups.map(root => createNodeComponent(root.id, props));
 
-    console.log("fff", props.search)
     return (
         <div>
             <LocationCounter {...props}/>
