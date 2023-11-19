@@ -31,6 +31,7 @@ The implementation is including the following functionality:
 * Search for a location/groups by name
   * Search is case-insensitive
   * Search is done on the name of the location/group
+  * Clear search button
 * Selection of a location/group
   * Locations must be selected if their group is selected
 * Dynamic display of the count of visual locations

@@ -32,7 +32,7 @@ export const SearchComponent = (props: Props) => {
                     }}/>
                 : <Image
                     src={searchIcon}
-                    className="absolute mr-3 mt-4 w-4 hidden min-[330px]:block"
+                    className="absolute mr-3 mt-4 w-4 hidden min-[390px]:block"
                     alt="Search Icon"/>}
         </div>
     );
