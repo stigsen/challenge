@@ -8,6 +8,7 @@ import {createSearchScope, initialScope, mergeScopes} from "@/utils/ScopeHelper"
 import {Card} from "@/components/Card";
 import {SearchComponent} from "@/components/SearchComponent";
 import {PartnerSelector} from "@/components/PartnerSelector";
+import {LocationCounter} from "@/components/LocationCounter";
 
 
 export default function Home() {
@@ -54,12 +55,13 @@ export default function Home() {
             <main className="flex min-h-screen flex-col items-center p-5">
                 <Card>
                     <div className="px-6 py-4 items-center">
-                        <h1 className='text-center font-bold'>Select Locations</h1>
+                        <h1 className='text-center text-xl font-bold'>Select Locations</h1>
                         <SearchComponent
                             search={searchQuery}
                             setSearch={setSearchQuery}
                             clearSearch={clearSearch}/>
-                            {partner ? <TreeViewComponent {...scope}  /> : <LoadingComponent/>}
+                        <LocationCounter {...scope}/>
+                        {partner ? <TreeViewComponent {...scope}  /> : <LoadingComponent/>}
                     </div>
                 </Card>
             </main>

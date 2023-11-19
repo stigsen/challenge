@@ -13,11 +13,12 @@ export const PartnerSelector = (props: Props) => {
         partners.map((partner, index) => <option key={index} value={partner}>{partner}</option> )
      : [<option key='option1'>Loading...</option>];
 
+    // Simulate a backend call/delay in loading the partners
     useEffect(() => {
         const partners = dataRepository.getPartners();
             setTimeout(()=>{
                 setPartners(partners);
-            }, 500);
+            }, 700);
     }, []);
 
     useEffect(() => {

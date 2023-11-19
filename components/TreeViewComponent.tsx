@@ -5,7 +5,6 @@ import {Tree} from "@/model/Tree";
 import {ids} from "@/utils/misc";
 import {getAllGroupParents, getGroups, getLocations} from "@/utils/TreeHelper";
 import {initialScope} from "@/utils/ScopeHelper";
-import {LocationCounter} from "@/components/LocationCounter";
 
 export interface ScopeInputProps {
     value?: Scope
@@ -56,6 +55,7 @@ const createNodeComponent = (groupId: string, scopeProps: ScopeInputProps): any 
                     name={tree.locations[location.id].name}
                     checked={locationOrParentsSelected(tree, location.id, value)}
                     visible={locationVisible(location.id, search)}
+                    isLocation={true}
                 />
             )
         });
@@ -82,9 +82,14 @@ export const TreeViewComponent = (props: ScopeInputProps) => {
 
     const treeNodes = rootGroups.map(root => createNodeComponent(root.id, props));
 
+    const noLocationsFound = props.search &&
+        ids(props.search?.locations).length === 0 &&
+        ids(props.search?.groups).length === 0;
+
     return (
         <div>
-            <LocationCounter {...props}/>
+            { noLocationsFound && <div className='text-center text-gray-400'>No locations found</div> }
+
             <div className='min-h-[300px] max-h-[400px] overflow-auto '>
                 {treeNodes}
             </div>

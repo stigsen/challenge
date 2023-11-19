@@ -15,7 +15,7 @@ export const SearchComponent = (props: Props) => {
         <div className="w-full flex justify-end items-center relative">
             <input
                 ref={inputRef}
-                className=' text-xs focus:caret-gray-500 px-2 py-1 mt-4 w-full rounded-md border-2 outline-0'
+                className=' focus:caret-gray-500 px-2 py-1 mt-4 w-full rounded-md border-2 outline-0'
                 type='text'
                 value={search}
                 placeholder='Search locations or groups'
