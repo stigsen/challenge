@@ -4,7 +4,7 @@ import {ScopeInputProps, TreeViewComponent} from "@/components/TreeViewComponent
 import {dataRepository} from "@/Data/DataRepository";
 import LoadingComponent from "@/components/LoadingComponent";
 import {Scope} from "@/model/Scope";
-import {initialScope, mergeScopes, searchScope} from "@/utils/ScopeHelper";
+import {createSearchScope, initialScope, mergeScopes} from "@/utils/ScopeHelper";
 import {Card} from "@/components/Card";
 import {SearchComponent} from "@/components/SearchComponent";
 import {PartnerSelector} from "@/components/PartnerSelector";
@@ -13,16 +13,16 @@ import {PartnerSelector} from "@/components/PartnerSelector";
 export default function Home() {
 
     const [partner, setPartner] = useState<string>();
-    const [search, setSearch] = useState<string>('');
+    const [searchQuery, setSearchQuery] = useState<string>('');
     const [selectedScope, setSelectedScope] = useState<Scope>(initialScope());
-    const [selectedSearch, setSelectedSearch] = useState<Scope | undefined>(undefined);
+    const [searchScope, setSearchScope] = useState<Scope | undefined>(undefined);
     const treeData = dataRepository.getTreeData(partner || '');
 
     useEffect(() => {
         if (treeData) {
-            setSelectedSearch(searchScope(treeData, search));
+            setSearchScope(createSearchScope(treeData, searchQuery));
         }
-    }, [search]);
+    }, [searchQuery]);
 
     const selectedScopeChanged = (scope: Scope) => {
         const newScope = mergeScopes(selectedScope, scope);
@@ -31,24 +31,23 @@ export default function Home() {
 
     const changePartner = (partner: string) => {
         setPartner(partner);
-        setSearch('');
-        setSelectedSearch(undefined);
+        setSearchQuery('');
+        setSearchScope(undefined);
         setSelectedScope(initialScope());
     }
 
     const clearSearch = () => {
-        setSearch('');
-        setSelectedSearch(undefined);
+        setSearchQuery('');
+        setSearchScope(undefined);
     }
 
     const scope: ScopeInputProps = {
         value: selectedScope,
         onChange: selectedScopeChanged,
         tree: treeData,
-        search: selectedSearch
+        search: searchScope
     }
 
-    console.log('rendering',selectedScope );
     return (
         <>
             <PartnerSelector onSelect={changePartner}/>
@@ -57,8 +56,8 @@ export default function Home() {
                     <div className="px-6 py-4 items-center">
                         <h1 className='text-center font-bold'>Select Locations</h1>
                         <SearchComponent
-                            search={search}
-                            setSearch={setSearch}
+                            search={searchQuery}
+                            setSearch={setSearchQuery}
                             clearSearch={clearSearch}/>
                             {partner ? <TreeViewComponent {...scope}  /> : <LoadingComponent/>}
                     </div>

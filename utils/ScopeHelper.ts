@@ -32,7 +32,7 @@ export const mergeScopes = (scope1 : Scope, scope2 : Scope ) : Scope => {
 }
 
 // Create a scope object from a given tree and a search query
-export const searchScope = (tree: Tree, query: string): Scope | undefined => {
+export const createSearchScope = (tree: Tree, query: string): Scope | undefined => {
     if (query.length === 0) return undefined;
 
     //Find locations with name matching query

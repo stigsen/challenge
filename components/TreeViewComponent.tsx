@@ -4,8 +4,6 @@ import {Scope} from "@/model/Scope";
 import {Tree} from "@/model/Tree";
 import {ids} from "@/utils/misc";
 import {getAllGroupParents, getGroups, getLocations} from "@/utils/TreeHelper";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 import {initialScope} from "@/utils/ScopeHelper";
 
 export interface ScopeInputProps {
