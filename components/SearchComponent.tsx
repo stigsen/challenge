@@ -8,7 +8,7 @@ type Props = {
     setSearch: (value: string) => void;
     clearSearch: () => void;
 }
-export const SearchField = (props: Props) => {
+export const SearchComponent = (props: Props) => {
     const [inputRef] = useState<React.RefObject<HTMLInputElement>>(React.createRef());
     const {search, setSearch, clearSearch} = props;
     return (
@@ -23,7 +23,7 @@ export const SearchField = (props: Props) => {
             {search.length > 0 ?
                 <Image
                     src={deleteIcon}
-                    className="cursor-pointer absolute mr-3 w-4"
+                    className="cursor-pointer absolute mr-2 w-4"
                     alt="Clear Search Icon"
                     onClick={() => {
                         clearSearch();
@@ -31,7 +31,7 @@ export const SearchField = (props: Props) => {
                     }}/>
                 : <Image
                     src={searchIcon}
-                    className="absolute mr-3 w-4"
+                    className="absolute mr-3 w-4 hidden min-[330px]:block"
                     alt="Search Icon"/>}
         </div>
     );

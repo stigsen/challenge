@@ -246,31 +246,21 @@ export const CustomerData: Tree[] = [
             "aarhus": {
                 name: "Aarhus",
                 parents: {
-                    "jylland": {}
+                    "denmark": {}
                 }
             },
             "zealand": {
                 name: "Sjælland",
                 parents: {
-                    "denmark": {}
+                    "not found": {}
                 }
             },
             "copenhagen": {
                 name: "Copenhagen",
                 parents: {
-                    "zealand": {}
+                    "copenhagen": {}
                 }
-            },
-            "france": {
-                name: "France",
-                parents: {}
-            },
-            "paris": {
-                name: "Paris",
-                parents: {
-                    "france": {}
-                }
-            },
+            }
         },
         partnerId: "partner-3-badData"
     }

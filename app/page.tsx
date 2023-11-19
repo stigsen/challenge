@@ -4,22 +4,17 @@ import {ScopeInputProps, TreeViewerComponent} from "@/components/TreeViewerCompo
 import {dataRepository} from "@/Data/DataRepository";
 import LoadingComponent from "@/components/LoadingComponent";
 import {Scope} from "@/model/Scope";
-import {mergeScopes, searchScope} from "@/utils/ScopeHelper";
+import {initialScope, mergeScopes, searchScope} from "@/utils/ScopeHelper";
 import {Card} from "@/components/Card";
-import {SearchField} from "@/components/SearchField";
+import {SearchComponent} from "@/components/SearchComponent";
 import {PartnerSelector} from "@/components/PartnerSelector";
 
+
 export default function Home() {
+
     const [partner, setPartner] = useState<string>();
     const [search, setSearch] = useState<string>('');
-    const [selectedScope, setSelectedScope] = useState<Scope>({
-        groups: {
-            paris: {}
-        },
-        locations: {
-            "aarhus-office-hub": {}
-        },
-    });
+    const [selectedScope, setSelectedScope] = useState<Scope>(initialScope());
     const [selectedSearch, setSelectedSearch] = useState<Scope | undefined>(undefined);
     const treeData = dataRepository.getTreeData(partner || '');
 
@@ -38,6 +33,7 @@ export default function Home() {
         setPartner(partner);
         setSearch('');
         setSelectedSearch(undefined);
+        setSelectedScope(initialScope());
     }
 
     const clearSearch = () => {
@@ -51,6 +47,8 @@ export default function Home() {
         tree: treeData,
         search: selectedSearch
     }
+
+    console.log('rendering',selectedScope );
     return (
         <>
             <PartnerSelector onSelect={changePartner}/>
@@ -58,7 +56,7 @@ export default function Home() {
                 <Card>
                     <div className="px-6 py-4 items-center">
                         <h1 className='text-center font-bold'>Select Locations</h1>
-                        <SearchField
+                        <SearchComponent
                             search={search}
                             setSearch={setSearch}
                             clearSearch={clearSearch}/>

@@ -4,6 +4,14 @@ import {ids} from "@/utils/misc";
 import {Tree} from "@/model/Tree";
 import {getAllGroupParents} from "@/utils/TreeHelper";
 
+export const initialScope = ( defaultScope?: Partial<Scope>): Scope => ({
+    groups: {
+    },
+    locations: {
+    },
+    ...defaultScope
+});
+
 export const mergeScopes = (scope1 : Scope, scope2 : Scope ) : Scope => {
     const groups = scope1.groups;
     ids(scope2.groups).forEach(id => { if( ids(groups).includes(id)) {
