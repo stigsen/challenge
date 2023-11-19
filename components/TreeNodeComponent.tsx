@@ -14,7 +14,7 @@ export const TreeNodeComponent = (props: TreeNodeProps) => {
     return (visible && <div className='ml-5'>
         <input
             type='checkbox'
-            className='accent-emerald-800'
+            className='accent-emerald-800 cursor-pointer'
             checked={checked}
             onChange={() => onChange(id)}
         />
