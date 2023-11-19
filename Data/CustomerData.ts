@@ -90,6 +90,24 @@ export const CustomerData: Tree[] = [
                     "aarhus": {}
                 }
             },
+            "randers-regnskov": {
+                name: "Randers Regnskov",
+                parents: {
+                    "randers": {}
+                }
+            },
+            "randers-efter-skole": {
+                name: "Randers Efterskole",
+                parents: {
+                    "randers": {}
+                }
+            },
+            "randers-bis": {
+                name: "Randers Bistro",
+                parents: {
+                    "randers": {}
+                }
+            },
             "aalborg-technologies": {
                 name: "Ålborg Technologies",
                 parents: {
@@ -112,6 +130,12 @@ export const CustomerData: Tree[] = [
                 name: "CPH Blox Hub",
                 parents: {
                     "copenhagen": {}
+                }
+            },
+            "gentofte-hospital": {
+                name: "Gentofte Hospital",
+                parents: {
+                    "gentofte": {}
                 }
             },
             "paris-corp-hq": {
@@ -156,6 +180,12 @@ export const CustomerData: Tree[] = [
                     "region-midt": {}
                 }
             },
+            "randers": {
+                name: "Randers",
+                parents: {
+                    "region-midt": {}
+                }
+            },
             "aalborg": {
                 name: "Ålborg",
                 parents: {
@@ -176,6 +206,12 @@ export const CustomerData: Tree[] = [
             },
             "copenhagen": {
                 name: "Copenhagen",
+                parents: {
+                    "region-h": {}
+                }
+            },
+            "gentofte": {
+                name: "Gentofte",
                 parents: {
                     "region-h": {}
                 }
@@ -247,6 +283,13 @@ export const CustomerData: Tree[] = [
                 name: "Aarhus",
                 parents: {
                     "denmark": {}
+                }
+            },
+            "aarhus2": {
+                name: "City with 2 parents",
+                parents: {
+                    "denmark": {},
+                    "jylland": {}
                 }
             },
             "zealand": {
